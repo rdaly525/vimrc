@@ -1,0 +1,71 @@
+# $Id: //hw/nv/env/.aliases#25 $
+
+#setup env if this is being sourced from someone else's shell
+#if (! $?HNAME) setenv HNAME `hostname`
+#if (! $?SEP)  setenv SEP   ":"
+
+##echo "trace_a10"
+
+#alias perl='/usr/bin/perl5.18.2'
+# ABBREVIATIONS
+alias a='alias'
+alias c='clear'
+alias g='grep'
+alias h='history'
+
+alias gv='ghostview'
+
+ # FORCE SPECIFIC PATHS AND ARGUMENTS
+alias gcc='cc'
+
+alias man='man -a'
+
+##echo "trace_a10"
+
+
+alias sv='export MANTLE=verilog'
+alias sb='export MANTLE=lattice'
+alias sx='export MANTLE=xilinx'
+alias s3='export MANTLE_TARGET=spartan3'
+alias s6='export MANTLE_TARGET=spartan6'
+
+ # MISC
+
+alias lc='wc -l'
+
+alias dos2unix="perl -pi -e 's/\cM//g;'"
+alias unix2dos="perl -pi -e 's/\n/\cM\n/m;'"
+
+
+###########
+## Ross Added aliases
+###########
+alias la='ls -a'
+alias ll='ls -l'
+alias hg='h | g'
+alias dusort='du -ks * | sort -nr | cut -f2 | xargs -d n du -sh'
+alias gr='g -sIR'
+
+#alias py2='source activate python2'
+#alias py3='source deactivate'
+alias py3='python3'
+alias py='python3'
+
+alias ntar="tar -cf"
+alias gz="tar -zcvf"
+alias ugz="tar -zxf"
+alias utar="tar -xf"
+
+alias mak="make -j8"
+
+#VCS
+#alias vcs 'env VCS_HOME=/home/tools/vcs/2014.12 /home/tools/vcs/2014.12/bin/vcs'
+
+alias ftdi-unload="sudo kextunload -b com.apple.driver.AppleUSBFTDI"
+alias tf="source ~/tensorflow3/bin/activate"
+alias tfu="deactivate"
+
+alias dotpng="dot -T png -O "
+
+alias ssh="ssh -Y"
+alias vlint="verilator --lint-only"
