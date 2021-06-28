@@ -29,9 +29,23 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin 'Valloric/YouCompleteMe'
+"Python
+"Plugin 'hdima/python-syntax'
+Plugin 'cdonovick/python-syntax'
+let g:python_highlight_all = 1
+
+" Indentation guides
+Plugin 'Yggdroot/indentLine'
+"let g:indentLine_defaultGroup = "Whitespace"
+"let g:indentLine_char = '|'
+"let g:indentLine_color_term = 239
+
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
+
+set list lcs=tab:\|\ "important trailing whitespace
+
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -45,14 +59,38 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-
 "ctrlp options
 "Sets home as location with .git
+"
+"
 let g:ctrlp_working_path_mode = 'r'
 let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("e")': ['<c-t>'],
   \ 'AcceptSelection("t")': ['<cr>', '<2-LeftMouse>'],
   \ }
+
+function! SynStack()
+  if !exists("*synstack")
+    return
+  endif
+  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
+
+function! SynGroup()
+	let l:s = synID(line('.'), col('.'), 1)
+	echo synIDattr(l:s, 'name') . ' -> ' . synIDattr(synIDtrans(l:s), 'name')
+endfunction
+
+
+let g:ctrlp_user_command = 'cd %s;
+  \ commonfilter="\.(jpg|bmp|png|jar|7z|zip|tar|gz|tgz|bz)$";
+  \ if [ ! -r ".ctrlpignore" ]; then
+  \   find . -type f | grep -Evi "$commonfilter";
+  \ else
+  \   find . -type f | grep -vF "$(cat .ctrlpignore)" | grep -Evi "$commonfilter";
+  \ fi'
+
+
 
 "let g:auto_type_info=0
 set t_RV=
@@ -64,7 +102,7 @@ set runtimepath^=~/.vim/bundle/ctrl.vim
 
 
 "au BufNewFile,BufRead *.v,*.vx,*.vt,*.vp set ft=verilog
-
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 set pastetoggle=<F2>
 
 
@@ -137,7 +175,9 @@ syntax on
 
 au BufNewFile,BufRead *.t set ft=lua
 au BufNewFile,BufRead *.cpp set syntax=cpp11
-au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
+"au FileType python setl tabstop=2 shiftwidth=2 softtabstop=2
+au FileType python setl tabstop=4 shiftwidth=4 softtabstop=4
+au FileType java setl tabstop=4 shiftwidth=4 softtabstop=4
 
 "===== LaTeX =====
 
@@ -310,11 +350,13 @@ endif
 " Note -- :help highlight-groups (e.g., SpellBad)
 " Note -- :help highlight-args (e.g., underline)
 " Note -- :help cterm-colors (e.g., White)
-
+ 
 " search
 highlight Search ctermbg=DarkGray
 highlight IncSearch ctermbg=DarkGray
 
+highlight Trailing ctermfg=None ctermbg=240
+match Trailing /\s\+$/
 " matching parentheses/braces/bracketscterm
 highlight MatchParen cterm=underline ctermfg=NONE ctermbg=NONE
 
@@ -382,6 +424,8 @@ noremap <C-e> $
 " Note -- the dot signifies string concatenation
 map ,e :e <C-R>=expand('%:h') . '/' <CR>
 
+set ww+=<,>
+vnoremap <BS> <Left>
 
 "===== Macros =====
 "This is only for xterm

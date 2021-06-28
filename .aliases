@@ -69,3 +69,13 @@ alias dotpng="dot -T png -O "
 
 alias ssh="ssh -Y"
 alias vlint="verilator --lint-only"
+alias pyclean="find . | grep -E \"(__pycache__|\.pyc|\.pyo$)\" | xargs rm -rf"
+alias git-pullall="git pull && git submodule update --recursive --remote"
+alias git-branchsort="git branch --sort=committerdate"
+alias nproc="sysctl -n hw.ncpu"
+
+#TODO 
+#cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -G Ninja ..     -DMLIR_DIR=$PWD/../llvm/build/lib/cmake/mlir     -DLLVM_DIR=$PWD/../llvm/build/lib/cmake/llvm     -DLLVM_ENABLE_ASSERTIONS=ON     -DCMAKE_BUILD_TYPE=DEBUG
+
+
+#Caleb's machine is named telescape
